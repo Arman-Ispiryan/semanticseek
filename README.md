@@ -12,6 +12,9 @@ semanticseek search "something about deploying to production"
 
 ---
 
+![Search results](example2.png)
+![Indexing](example.png)
+
 ## Features
 
 - 🧠 **Semantic search** — finds documents by meaning, not just keywords
