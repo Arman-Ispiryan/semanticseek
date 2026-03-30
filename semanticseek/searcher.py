@@ -10,7 +10,7 @@ _model_cache = {}
 
 def get_model(model_name: str = "all-MiniLM-L6-v2") -> SentenceTransformer:
     if model_name not in _model_cache:
-        _model_cache[model_name] = SentenceTransformer(model_name)
+    _model_cache[model_name] = SentenceTransformer(model_name, device="cpu")
     return _model_cache[model_name]
 
 
