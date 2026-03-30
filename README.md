@@ -1,4 +1,4 @@
-# SemanticSeek 🔍
+# SemanticSeek 
 
 > Natural language file search powered by local embeddings. No GPU, no API keys, no internet required after setup.
 
