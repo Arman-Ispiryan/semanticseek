@@ -11,8 +11,10 @@ semanticseek search "something about deploying to production"
 ```
 
 ---
-
+## GPU / CPU Selection
 ![Search results](example2.png)
+---
+## Example Query
 ![Indexing](example.png)
 
 ## Features
