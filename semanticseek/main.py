@@ -86,7 +86,7 @@ def index(
 
         # Lazy load model — shown once
         from sentence_transformers import SentenceTransformer
-        model = SentenceTransformer("all-MiniLM-L6-v2", device="cpu")
+        import os; model = SentenceTransformer("all-MiniLM-L6-v2", device=os.environ.get("SEMANTICSEEK_DEVICE", "cpu"))
         progress.update(task, description="[cyan]Indexing files...")
 
         for file in files:

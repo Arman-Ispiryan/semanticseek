@@ -2,16 +2,24 @@
 searcher.py — Semantic search over indexed chunks.
 """
 
+import os
 from typing import List, Dict
 from sentence_transformers import SentenceTransformer
 
 _model_cache = {}
 
 
+def get_device() -> str:
+    """Read device preference from environment variable, default to cpu."""
+    return os.environ.get("SEMANTICSEEK_DEVICE", "cpu")
+
+
 def get_model(model_name: str = "all-MiniLM-L6-v2") -> SentenceTransformer:
-    if model_name not in _model_cache:
-    _model_cache[model_name] = SentenceTransformer(model_name, device="cpu")
-    return _model_cache[model_name]
+    device = get_device()
+    key = f"{model_name}:{device}"
+    if key not in _model_cache:
+        _model_cache[key] = SentenceTransformer(model_name, device=device)
+    return _model_cache[key]
 
 
 def search(collection, query: str, top_k: int = 5, model_name: str = "all-MiniLM-L6-v2") -> List[Dict]:
@@ -22,7 +30,6 @@ def search(collection, query: str, top_k: int = 5, model_name: str = "all-MiniLM
     model = get_model(model_name)
     query_embedding = model.encode([query], show_progress_bar=False)[0].tolist()
 
-    # Fetch more than needed to allow deduplication across files
     fetch_k = min(top_k * 6, 50)
 
     results = collection.query(
@@ -36,7 +43,6 @@ def search(collection, query: str, top_k: int = 5, model_name: str = "all-MiniLM
     metas = results["metadatas"][0]
     distances = results["distances"][0]
 
-    # ChromaDB cosine distance: score = 1 - distance (higher = more similar)
     scored = []
     for doc, meta, dist in zip(docs, metas, distances):
         score = 1.0 - dist
@@ -56,6 +62,5 @@ def search(collection, query: str, top_k: int = 5, model_name: str = "all-MiniLM
         if f not in seen_files or item["score"] > seen_files[f]["score"]:
             seen_files[f] = item
 
-    # Sort by score descending, return top_k
     deduped = sorted(seen_files.values(), key=lambda x: x["score"], reverse=True)
     return deduped[:top_k]
