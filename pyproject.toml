@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "semanticseek"
+version = "1.0.0"
+description = "Natural language file search powered by local embeddings"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+dependencies = [
+    "sentence-transformers>=2.7.0",
+    "chromadb>=0.5.0",
+    "pymupdf>=1.24.0",
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+]
+
+[project.scripts]
+semanticseek = "semanticseek.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["semanticseek*"]
