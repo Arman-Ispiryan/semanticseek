@@ -26,7 +26,7 @@ semanticseek search "something about deploying to production"
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/semanticseek/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Arman-Ispiryan/semanticseek/main/install.sh | bash
 ```
 
 That's it. The script will:
