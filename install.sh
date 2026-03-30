@@ -65,9 +65,9 @@ arrow_select() {
     while true; do
         tput cuu "$count" 2>/dev/null || true
 
-        IFS= read -rsn1 key 2>/dev/null
+        IFS= read -rsn1 key </dev/tty 2>/dev/null
         if [[ "$key" == $'\x1b' ]]; then
-            IFS= read -rsn2 key2 2>/dev/null
+            IFS= read -rsn2 key2 </dev/tty 2>/dev/null
             key="$key$key2"
         fi
 
@@ -141,6 +141,7 @@ SRC_DIR="$INSTALL_DIR/src"
 if command -v git &>/dev/null; then
     if [ -d "$SRC_DIR/.git" ]; then
         info "Updating existing installation..."
+        git -C "$SRC_DIR" reset --hard --quiet
         git -C "$SRC_DIR" pull --quiet
     else
         info "Cloning repository..."
