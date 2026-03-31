@@ -2,7 +2,7 @@
 
 > Natural language file search powered by local embeddings. No API keys, no internet required after setup.
 
-Instead of grepping for exact words, SemanticSeek understands **meaning**. Ask it things like:
+Instead of grepping for exact words, SemanticSeek understands **meaning**. Ask it things like: 
 
 ```
 semanticseek search "where did I write about network timeouts"
